@@ -7,14 +7,8 @@ XOR problem (exclusive or) is a problem where the output is true only if one of 
 with at least two neurons and its solution is non-linear.
 ```
 0 and 0 outputs 0
-```
-```
 0 and 1 outputs 1
-```
-```
 1 and 0 outputs 1
-```
-```
 1 and 1 outputs 0
 ```
 ## Solution
