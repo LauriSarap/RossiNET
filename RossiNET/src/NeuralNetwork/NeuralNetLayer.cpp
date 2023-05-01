@@ -30,6 +30,13 @@ namespace NNetwork
         }
         
         std::cout << std::endl;
+
+        inputThread = std::thread(&NeuralNetLayer::WaitForInput, this);
+    }
+
+    NeuralNetLayer::~NeuralNetLayer()
+    {
+        inputThread.join();
     }
 
     void NeuralNetLayer::OnUpdate()
@@ -52,4 +59,40 @@ namespace NNetwork
         std::cout << std::endl; 
         */
     }
+
+    void NeuralNetLayer::WaitForInput()
+    {
+        while (true)
+        {
+            cout << "Write T or P to train or predict with the model!" << endl;
+            string input;
+            cin >> input;
+            if (input == "T")
+            {
+                vector<vector<double>> trainingInput =
+                {
+                    { 0, 0 },
+                    { 0, 1 },
+                    { 1, 0 },
+                    { 1, 1 }
+                };
+                vector<double> targetOutput = { 0, 1, 1, 0 };
+                double error = nn.Train(trainingInput, targetOutput, 50000, 0.05);
+                LOG_INFO("Final error: {0}", error);
+                std::cout << std::endl;
+            }
+            else if (input == "P")
+            {
+                cout << "Write two numbers to predict the output!" << endl;
+                double input1, input2;
+                cin >> input1 >> input2;
+                nn.Predict({input1, input2});
+            }
+            else
+            {
+                cout << "Invalid input!" << endl;
+            }
+        }
+    }
+
 }
