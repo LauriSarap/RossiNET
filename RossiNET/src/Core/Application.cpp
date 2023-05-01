@@ -1,6 +1,7 @@
 ﻿#include "rpch.h"
 #include "Application.h"
 #include "Log.h"
+#include "Visualization/WindowLayer.h"
 
 namespace Core
 {
@@ -13,7 +14,10 @@ namespace Core
         Log::Initialization();
 
         auto neuralNetLayer = std::make_unique<NNetwork::NeuralNetLayer>();
+        auto windowLayer = std::make_unique<Window::WindowLayer>(neuralNetLayer->GetNeuralNetwork());
+        
         layerStack.push_back(std::move(neuralNetLayer));
+        layerStack.push_back(std::move(windowLayer));
     }
 
     Application::~Application(){}

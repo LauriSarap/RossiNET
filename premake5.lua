@@ -30,7 +30,8 @@ project "RossiNET"
     {
         "%{prj.name}/src/**.h",
         "%{prj.name}/src/**.cpp",
-        "%{prj.name}/src/**.png"
+        "%{prj.name}/src/**.png",
+        "%{prj.name}/src/**.ttf"
     }
 
     includedirs

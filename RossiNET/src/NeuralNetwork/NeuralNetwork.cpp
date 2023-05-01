@@ -33,6 +33,12 @@ namespace NNetwork
 			((double)rand() / RAND_MAX) * 2 - 1
 		};
 		biasOutput = ((double)rand() / RAND_MAX) * 2 - 1;
+
+		layerCount = 1 + 2;
+
+		previousInput = {0, 0};
+		hiddenLayer = {0, 0};
+		previousOutput = 0;
 	}
 
 	NeuralNetwork::~NeuralNetwork()
@@ -50,9 +56,8 @@ namespace NNetwork
 			totalError = 0;
 			for (size_t i = 0; i < trainingInput.size(); i++)
 			{
-				//totalError = 0;
 				// Calculate values for two hidden nodes in the hidden layer.
-				vector<double> hiddenLayer(2);
+				hiddenLayer = {0, 0};
 				hiddenLayer[0] = MathFunctions::Sigmoid(
 					trainingInput[i][0] * weightsInputToHidden[0] + trainingInput[i][1] * weightsInputToHidden[1] +
 					biasHidden[0]);
@@ -113,7 +118,9 @@ namespace NNetwork
 
 	double NeuralNetwork::Predict(const vector<double>& input)
 	{
-		vector<double> hiddenLayer(2);
+		previousInput = input;
+		
+		hiddenLayer = {0, 0};
 
 		hiddenLayer[0] = MathFunctions::Sigmoid(
 			input[0] * weightsInputToHidden[0] + input[1] * weightsInputToHidden[1] + biasHidden[0]);
@@ -122,6 +129,8 @@ namespace NNetwork
 
 		double output = MathFunctions::Sigmoid(
 			hiddenLayer[0] * weightsHiddenToOutput[0] + hiddenLayer[1] * weightsHiddenToOutput[1] + biasOutput);
+
+		previousOutput = output;
 		return output;
 	}
 }

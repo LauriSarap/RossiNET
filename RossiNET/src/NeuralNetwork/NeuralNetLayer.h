@@ -11,8 +11,9 @@ namespace NNetwork
     
         virtual void OnUpdate() override;
 
+        NeuralNetwork& GetNeuralNetwork() { return nn; }
+
     private:
         NeuralNetwork nn;
-        char inputKey;
     };
 }
